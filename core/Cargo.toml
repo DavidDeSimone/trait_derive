@@ -1,0 +1,8 @@
+[package]
+name = "trait_derive_core"
+version = "0.1.0"
+authors = ["David DeSimone <djd231@scarletmail.rutgers.edu>"]
+
+[dependencies]
+quote = "0.3"
+syn = { version = "0.11.11", features = ["full"] }
