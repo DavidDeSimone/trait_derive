@@ -2,6 +2,9 @@ trait_derive is a small crate that will generate a trait based on the impl block
 
 To add it to your project, add the following line to your Cargo.toml
 
+```
+trait_derive = "0.1.0"
+```
 
 Currently, trait_derive requires you to be running _nightly_ Rust. This will hopefully change in the future, once proc macros are stable.
 

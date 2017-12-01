@@ -2,6 +2,12 @@
 name = "trait_derive"
 version = "0.1.0"
 authors = ["David DeSimone <djd231@scarletmail.rutgers.edu>"]
+description = "Simple proc macro used to generate traits from impl blocks."
+repository = "https://github.com/DavidDeSimone/trait_derive"
+readme  = "README.md"
+license = "MIT"
+keywords = ["testing", "unit-test", "traits", "trait"]
+categories = ["development-tools::testing", "development-tools::procedural-macro-helpers", "rust-patterns"]
 
 [dependencies]
 quote = "0.3"
