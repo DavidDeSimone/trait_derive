@@ -34,9 +34,23 @@ use proc_macro::TokenStream;
 use std::str::FromStr;
 use trait_derive_core::generate_trait;
 
+static ATTR_ERROR_MSG: &str = "Invalid trait name. Please enter another name. Names must be in the pattern #[make_trait(YOUR_NAME)]";
+
 #[proc_macro_attribute]
-pub fn make_trait(_attr_ts: TokenStream, body_ts: TokenStream) -> TokenStream {
+pub fn make_trait(attr_ts: TokenStream, body_ts: TokenStream) -> TokenStream {
+    let attr_s = attr_ts.to_string();
+    let len = attr_s.len();
+    let name = if len == 0 {
+        None
+    } else {
+        // String opening '(' and closing ')'
+        assert!(attr_s.starts_with('('), ATTR_ERROR_MSG);
+        assert!(attr_s.ends_with(')'), ATTR_ERROR_MSG);
+        let slice = &attr_s[1..len-1];
+        Some(String::from_str(slice).expect(ATTR_ERROR_MSG))
+    };
+    
     let raw_item = syn::parse_item(&body_ts.to_string()).unwrap();
-    let final_output = generate_trait(&raw_item);
+    let final_output = generate_trait(&raw_item, name);
     TokenStream::from_str(final_output.as_str()).unwrap()
 }

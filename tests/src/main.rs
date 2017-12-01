@@ -12,10 +12,17 @@ impl A {
     }
 }
 
+#[make_trait(Database)]
+impl A {
+    pub fn x(&self) -> u32 {
+        32
+    }
+}
+
 pub struct B<T>(*mut T);
 
 #[make_trait]
-impl<T> B<T> {
+impl<T> B <T> {
     pub fn ptr_t(x: *mut T) -> B<T> {
         B(x)
     }
@@ -32,11 +39,16 @@ mod tests {
     fn takes_trait(x: &TraitA) {
         x.hello_world();
     }
+
+    fn takes_db(y: &Database) {
+        y.x();
+    }
     
     #[test]
     fn basic() {
         let a = A { };
         takes_trait(&a);
+        takes_db(&a);
     }
 
     struct C;

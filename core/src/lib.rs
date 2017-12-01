@@ -92,7 +92,7 @@ fn parse_methods(items: &Vec<syn::ImplItem>) -> (quote::Tokens, quote::Tokens) {
     (decls, impls)
 }
 
-pub fn generate_trait(item: &syn::Item) -> quote::Tokens {
+pub fn generate_trait(item: &syn::Item, name: Option<String>) -> quote::Tokens {
     match item.node {
         syn::ItemKind::Impl(_unsafety,
                             _impl_pol,
@@ -100,18 +100,31 @@ pub fn generate_trait(item: &syn::Item) -> quote::Tokens {
                             ref _path,
                             ref ty,
                             ref items) => {
-            let name = concat_idents("Trait", quote!{ #ty }.as_str());
+            
+            let name = if let Some(name_str) = name {
+                syn::Ident::new(name_str)
+            } else {
+                let name = match **ty {
+                    syn::Ty::Path(_, ref path) => {
+                        let ref segments = path.segments;
+                        let ref last_ident = segments.last().unwrap().ident;
+                        quote!{ #last_ident }
+                    },
+                    _ => panic!()
+                };
+                concat_idents("Trait", name.as_str())
+            };
+            
             let (decls, impls) = parse_methods(items);
-
             let ref where_clause = generics.where_clause;
             let qwhere_clause = quote!{ #where_clause };
             let qgenerics = generics_to_quote(generics);
             quote! {
-                trait #name {
+                trait #name #qgenerics {
                     #decls
                 }
 
-                impl #qgenerics #name for #ty #qwhere_clause {
+                impl #qgenerics #name #qgenerics for #ty #qwhere_clause {
                     #impls
                 }
             }
