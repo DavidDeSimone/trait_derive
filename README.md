@@ -25,6 +25,17 @@ impl A {
     }
 }
 
+// Behind the scenes, we have generated code equivalent to 
+//trait TraitA {
+//  fn hello_world(&self);
+//}
+//
+//impl TraitA for A {
+//  fn hello_world(&self) {
+//    println!("Hello, world!");
+//  }
+//}
+
 fn takes_trait(x: &TraitA) {
    x.hello_world();
 }
