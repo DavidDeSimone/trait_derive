@@ -1,7 +1,14 @@
 [package]
 name = "trait_derive_core"
 version = "0.1.0"
+description = "Core implementation for 'trait_derive' crate."
 authors = ["David DeSimone <djd231@scarletmail.rutgers.edu>"]
+repository = "https://github.com/DavidDeSimone/trait_derive"
+readme  = "README.md"
+license = "MIT"
+keywords = ["testing", "unit-test", "traits", "trait"]
+categories = ["development-tools::testing", "development-tools::procedural-macro-helpers", "rust-patterns"]
+
 
 [dependencies]
 quote = "0.3"

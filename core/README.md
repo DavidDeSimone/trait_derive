@@ -1,0 +1,1 @@
+This is a helper crate used by https://github.com/DavidDeSimone/trait_derive. It contains the main implementation for that proc macro. Please read the parent README for a full description of it's usage.
